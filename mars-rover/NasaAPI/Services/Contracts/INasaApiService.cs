@@ -1,5 +1,6 @@
 ﻿using NasaAPI.Models;
-using System.Collections.Generic;
+using NasaAPI.Models.RequestModels;
+using NasaAPI.Models.ResponseModels;
 using System.Threading.Tasks;
 
 namespace NasaAPI.Services.Contracts
@@ -7,5 +8,7 @@ namespace NasaAPI.Services.Contracts
     public interface INasaApiService
     {
         Task GetSaveRoverData();
+        RoverImage GetImage(int id);
+        SearchImagesResponse SearchImages(SearchImagesRequest request);
     }
 }

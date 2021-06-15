@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using NasaAPI.Models;
+using NasaAPI.Models.RequestModels;
 using NasaAPI.Models.ResponseModels;
+using NasaAPI.Repositories.Contracts;
 using NasaAPI.Services.Contracts;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 
 namespace NasaAPI.Services.Implementations
@@ -16,32 +19,47 @@ namespace NasaAPI.Services.Implementations
     public class NasaApiService : INasaApiService
     {
         private readonly NasaApiProperties _properties;
-        public NasaApiService(IOptions<NasaApiProperties> properties)
+        private readonly IRoverImageRepository _imageRepo;
+        private readonly int _perPageMax = 25;
+        public NasaApiService(IOptions<NasaApiProperties> properties, IRoverImageRepository imageRepo)
         {
             _properties = properties.Value;
+            _imageRepo = imageRepo;
         }
+
         public async Task GetSaveRoverData()
         {
-            string text = File.ReadAllText(@"./dates.txt");
+            var dateStrs = File.ReadAllLines(@"./dates.txt");
             var dates = new List<DateTime>();
-            foreach(var d in text.Split('\n'))
-            {
+            foreach(var d in dateStrs)
                 if (DateTime.TryParse(d, out var date))
                     dates.Add(date);
-            }
 
-            var t1 = new List<Task<IEnumerable<RoverImage>>>();
-            foreach (var d in dates)
-                foreach (var r in _properties.Rovers)
-                    t1.Add(ProcessImageDate(d, r));
-
+            var t1 = dates.SelectMany(d => _properties.Rovers, (d, r) => ProcessImageDate(d, r));
             await Task.WhenAll(t1);
-            var imageDetails = t1.SelectMany(im => im.Result);
+            var imageDetails = t1.SelectMany(im => im.Result).ToList();
 
             var t2 = imageDetails.Select(im => GetImageFile(im));
             await Task.WhenAll(t2);
 
+            await _imageRepo.SaveImages(imageDetails);
+        }
 
+        public RoverImage GetImage(int id)
+        {
+            return _imageRepo.GetImage(id);
+        }
+
+        public SearchImagesResponse SearchImages(SearchImagesRequest request)
+        {
+            var perPage = Math.Min(request.PerPage, _perPageMax);
+            return new SearchImagesResponse()
+            {
+                Page = request.Page,
+                PerPage = perPage,
+                RoverImages = _imageRepo.SearchImages(request.Date, request.RoverName, request.Page, perPage),
+                Total = _imageRepo.SearchImagesCount(request.Date, request.RoverName)
+            };
         }
 
         private async Task<IEnumerable<RoverImage>> ProcessImageDate(DateTime date, string roverName)
@@ -65,13 +83,13 @@ namespace NasaAPI.Services.Implementations
 
         private async Task GetImageFile(RoverImage image)
         {
-            var imgType = image.ImageSource.Split('.').Last();
-            var filename = $"{image.Rover.Name}_{image.Camera.Abbreviation}_{image.EarthDate.ToString("yyyy_MM_dd")}_{image.Id}";
+            var filename = $"{image.Rover.Name}_{image.Camera.Abbreviation}_{image.EarthDate.ToString("yyyy_MM_dd")}_{image.Id}.{image.ImageSource.Split('.').Last()}";
             var client = new RestClient(image.ImageSource);            
             var result = await client.ExecuteAsync(new RestRequest(Method.GET));
             if(result.IsSuccessful)
             {
-                File.WriteAllBytes(Path.Combine("../NasaAPI/Repositories/Images", $"{filename}.{imgType}"), result.RawBytes);
+                File.WriteAllBytes(Path.Combine("../NasaAPI/Repositories/Images", filename), result.RawBytes);
+                image.ImageFilename = filename;
             }
         }
     }

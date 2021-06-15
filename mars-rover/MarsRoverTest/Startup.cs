@@ -5,8 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NasaAPI.Models;
+using NasaAPI.Repositories.Contracts;
+using NasaAPI.Repositories.Implementations;
 using NasaAPI.Services.Contracts;
 using NasaAPI.Services.Implementations;
+using System.Threading.Tasks;
 
 namespace MarsRoverTest
 {
@@ -22,9 +25,9 @@ namespace MarsRoverTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             services.AddTransient<INasaApiService, NasaApiService>();
+            services.AddTransient<IRoverImageRepository, RoverImageRepository>();
+
             services.AddControllersWithViews().AddNewtonsoftJson(opts =>
             {
                 opts.UseMemberCasing();
@@ -53,7 +56,7 @@ namespace MarsRoverTest
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())

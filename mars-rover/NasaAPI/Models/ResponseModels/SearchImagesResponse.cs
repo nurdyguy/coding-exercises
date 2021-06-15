@@ -1,11 +1,9 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NasaAPI.Models.ResponseModels
 {
-    public class PhotosResponse
+    public class SearchImagesResponse : PagedResponse
     {
-        [JsonProperty("photos")]
         public IEnumerable<RoverImage> RoverImages { get; set; }
     }
 }

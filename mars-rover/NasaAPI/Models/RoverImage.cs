@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
 
 namespace NasaAPI.Models
 {
@@ -13,9 +14,25 @@ namespace NasaAPI.Models
         public RoverCamera Camera { get; set; }
         [JsonProperty("img_src")]
         public string ImageSource { get; set; }
-        [JsonProperty("earch_date")]
+        [JsonProperty("earth_date")]
         public DateTime EarthDate { get; set; }
         [JsonProperty("rover")]
         public Rover Rover { get; set; }
+        public string ImageFilename { get; set; }
+        public byte[] ImageBytes
+        {
+            get
+            {
+                try
+                {
+                    return File.ReadAllBytes($"../NasaAPI/Repositories/Images/{ImageFilename}");
+                }
+                catch(Exception ex)
+                {
+                    // log exception here
+                    return new byte[0];
+                }
+            }            
+        }
     }
 }
