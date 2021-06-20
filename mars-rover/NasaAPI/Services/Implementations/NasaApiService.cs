@@ -30,7 +30,7 @@ namespace NasaAPI.Services.Implementations
         public async Task GetSaveRoverData()
         {
             // keeps us from rerunning fetch on page reload if cache already built
-            if (_imageRepo.SearchImagesCount(new List<DateTime>(), new List<string>()) == 0)
+            if (!_imageRepo.GetAllImages()?.Any() ?? true)
             {
                 var dateStrs = File.ReadAllLines(@"./dates.txt");
                 var dates = new List<DateTime>();
@@ -47,6 +47,24 @@ namespace NasaAPI.Services.Implementations
 
                 await _imageRepo.SaveImages(imageDetails);
             }
+        }
+
+        public SearchOptionsResponse GetSearchOptions()
+        {
+            var dateStrs = File.ReadAllLines(@"./dates.txt");
+            var dates = new List<DateTime>();
+            foreach (var d in dateStrs)
+                if (DateTime.TryParse(d, out var date))
+                    dates.Add(date);
+
+            var images = _imageRepo.GetAllImages();
+
+            var response = new SearchOptionsResponse()
+            {
+                Dates = dates,
+                Rovers = images.Select(i => i.Rover.Name).Distinct()
+            };
+            return response;
         }
 
         public RoverImage GetImage(int id)

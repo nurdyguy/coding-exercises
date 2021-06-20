@@ -23,13 +23,19 @@ export class SearchComponent implements OnInit
     _pageNumbers: number[] = [];
 
     constructor(private _dataService: DataService, private _commService: CommunicationService, private _modalService: NgbModal)
-    {
-        this._searchFilter = new SearchFilter([ '7/13/2016', '2/27/2017', '6/2/2018' ], [ 'Curiosity', 'Opportunity' ]);
+    {                
     }
 
     ngOnInit(): void
     {
-        this.GetImages();
+        let _this = this;
+        this._dataService.GetSearchOptions().subscribe({
+            next(response)
+            {
+                _this._searchFilter = new SearchFilter(response.Dates.sort(), response.Rovers.sort());
+                _this.GetImages();
+            }
+        })
     }
 
     NewSearch()

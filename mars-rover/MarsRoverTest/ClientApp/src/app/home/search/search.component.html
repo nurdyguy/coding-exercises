@@ -8,17 +8,17 @@
     <div class="row g-0">
         <div class="col-6 col-md-3 col-lg-2">
             <h4>Image Dates</h4>
-            <div class="form-check" *ngFor="let date of _searchFilter.Dates">
+            <div class="form-check" *ngFor="let date of _searchFilter?.Dates">
                 <input class="form-check-input" type="checkbox" value="{{ date.Value }}"
                     [(ngModel)]="date.IsChecked" >
                 <label class="form-check-label" for="flexCheckChecked">
-                    {{ date.Value }}
+                    {{ date.Value | date:'M/d/yyyy' }}
                 </label>
             </div>            
         </div>
         <div class="col-6 col-md-3 col-lg-2">
             <h4>Rovers</h4>
-            <div class="form-check" *ngFor="let rover of _searchFilter.Rovers">
+            <div class="form-check" *ngFor="let rover of _searchFilter?.Rovers">
                 <input class="form-check-input" type="checkbox" value="{{ rover.Value }}"
                     [(ngModel)]="rover.IsChecked" >
                 <label class="form-check-label" for="flexCheckChecked">
@@ -32,7 +32,7 @@
         <div class="col-6 col-md-3 col-lg-4 align-self-end">
             <div class="row g-0">
                 <div class="col-12">
-                    Showing {{ _perPage * (_page - 1) + 1 }} to {{ _perPage * _page }} of {{ _total }}
+                    {{ _total > 0 ?'Showing ' + (_perPage * (_page - 1) + 1) + ' to ' + (_perPage * _page) + ' of ' + _total : 'No Results'}}
                 </div>
             </div>
             <div class="row g-0">

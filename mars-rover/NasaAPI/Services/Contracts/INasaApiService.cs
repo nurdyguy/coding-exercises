@@ -10,5 +10,7 @@ namespace NasaAPI.Services.Contracts
         Task GetSaveRoverData();
         RoverImage GetImage(int id);
         SearchImagesResponse SearchImages(SearchImagesRequest request);
+        SearchOptionsResponse GetSearchOptions();
+
     }
 }

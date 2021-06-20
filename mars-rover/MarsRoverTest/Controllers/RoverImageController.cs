@@ -27,6 +27,18 @@ namespace MarsRoverTest.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet, Route("FilterOptions")]
+        public async Task<IActionResult> GetFilterOptions()
+        {
+            var opts = _nasaApiService.GetSearchOptions();
+            var result = new FilterOptionsResponse()
+            {
+                Dates = opts.Dates,
+                Rovers = opts.Rovers
+            };
+            return new JsonResult(result);
+        }
+
         [HttpGet, Route("{id:int}")]
         public async Task<IActionResult> GetImage(int id)
         {

@@ -5,6 +5,7 @@ import { ApiService } from '../services/api.service';
 import { GetImagesRequest } from 'src/Models/RequestModels/GetImagesRequest';
 import { GetImagesResponse } from 'src/Models/ResponseModels/GetImagesResponse';
 import { RoverImage } from 'src/Models/RoverImage';
+import { SearchFiltersResponse } from 'src/Models/ResponseModels/SearchFiltersResponse';
 
 
 @Injectable({
@@ -29,7 +30,10 @@ export class DataService
         return this._api.request('POST', 'RoverImage/Search', { body: req });
     }
 
-
+    GetSearchOptions(): Observable<SearchFiltersResponse>
+    {
+        return this._api.request('GET', 'RoverImage/FilterOptions', {});
+    }
 
 
     private handleError(err: any)

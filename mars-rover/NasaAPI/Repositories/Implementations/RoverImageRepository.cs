@@ -20,7 +20,10 @@ namespace NasaAPI.Repositories.Implementations
         {
             return _cache.Get<IEnumerable<RoverImage>>(_cacheKey).SingleOrDefault(ri => ri.Id == id);
         }
-
+        public IEnumerable<RoverImage> GetAllImages()
+        {
+            return _cache.Get<IEnumerable<RoverImage>>(_cacheKey);
+        }
         public IEnumerable<RoverImage> SearchImages(IEnumerable<DateTime> dates, IEnumerable<string> roverNames, int page, int perPage)
         {
             var imgs = (_cache.Get<IEnumerable<RoverImage>>(_cacheKey) ?? new List<RoverImage>())
