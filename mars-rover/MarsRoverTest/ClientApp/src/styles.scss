@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+    background-image: url(./assets/images/mars-back.jpg);
+    background-size: cover;
+
+    .modal-dialog {
+        max-width: fit-content !important;
+    }
+}
+/* Importing Bootstrap SCSS file. */
+//@import '~bootstrap/scss/bootstrap';

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace NasaAPI.Models
 {
@@ -33,6 +34,10 @@ namespace NasaAPI.Models
                     return new byte[0];
                 }
             }            
+        }
+        public string FileType
+        {
+            get { return ImageFilename.Split('.').Last(); }
         }
     }
 }

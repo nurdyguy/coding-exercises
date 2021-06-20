@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NasaAPI.Models.RequestModels
 {
     public class SearchImagesRequest : PagedRequest
     {
-        public DateTime Date { get; set; }
-        public string RoverName { get; set; }
+        public IEnumerable<DateTime> Dates { get; set; }
+        public IEnumerable<string> RoverNames { get; set; }
     }
 }

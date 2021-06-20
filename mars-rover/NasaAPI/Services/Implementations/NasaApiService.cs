@@ -29,20 +29,24 @@ namespace NasaAPI.Services.Implementations
 
         public async Task GetSaveRoverData()
         {
-            var dateStrs = File.ReadAllLines(@"./dates.txt");
-            var dates = new List<DateTime>();
-            foreach(var d in dateStrs)
-                if (DateTime.TryParse(d, out var date))
-                    dates.Add(date);
+            // keeps us from rerunning fetch on page reload if cache already built
+            if (_imageRepo.SearchImagesCount(new List<DateTime>(), new List<string>()) == 0)
+            {
+                var dateStrs = File.ReadAllLines(@"./dates.txt");
+                var dates = new List<DateTime>();
+                foreach (var d in dateStrs)
+                    if (DateTime.TryParse(d, out var date))
+                        dates.Add(date);
 
-            var t1 = dates.SelectMany(d => _properties.Rovers, (d, r) => ProcessImageDate(d, r));
-            await Task.WhenAll(t1);
-            var imageDetails = t1.SelectMany(im => im.Result).ToList();
+                var t1 = dates.SelectMany(d => _properties.Rovers, (d, r) => ProcessImageDate(d, r));
+                await Task.WhenAll(t1);
+                var imageDetails = t1.SelectMany(im => im.Result).ToList();
 
-            var t2 = imageDetails.Select(im => GetImageFile(im));
-            await Task.WhenAll(t2);
+                var t2 = imageDetails.Select(im => GetImageFile(im));
+                await Task.WhenAll(t2);
 
-            await _imageRepo.SaveImages(imageDetails);
+                await _imageRepo.SaveImages(imageDetails);
+            }
         }
 
         public RoverImage GetImage(int id)
@@ -57,8 +61,8 @@ namespace NasaAPI.Services.Implementations
             {
                 Page = request.Page,
                 PerPage = perPage,
-                RoverImages = _imageRepo.SearchImages(request.Date, request.RoverName, request.Page, perPage),
-                Total = _imageRepo.SearchImagesCount(request.Date, request.RoverName)
+                RoverImages = _imageRepo.SearchImages(request.Dates, request.RoverNames, request.Page, perPage),
+                Total = _imageRepo.SearchImagesCount(request.Dates, request.RoverNames)
             };
         }
 

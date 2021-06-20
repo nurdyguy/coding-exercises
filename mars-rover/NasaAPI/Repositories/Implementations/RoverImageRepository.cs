@@ -21,23 +21,17 @@ namespace NasaAPI.Repositories.Implementations
             return _cache.Get<IEnumerable<RoverImage>>(_cacheKey).SingleOrDefault(ri => ri.Id == id);
         }
 
-        public IEnumerable<RoverImage> SearchImages(DateTime date, string roverName, int page, int perPage)
+        public IEnumerable<RoverImage> SearchImages(IEnumerable<DateTime> dates, IEnumerable<string> roverNames, int page, int perPage)
         {
-            var imgs = _cache.Get<IEnumerable<RoverImage>>(_cacheKey);
-            if(DateTime.Compare(date, new DateTime()) != 0)
-                imgs = imgs.Where(i => i.EarthDate == date);
-            if (!string.IsNullOrWhiteSpace(roverName))
-                imgs = imgs.Where(i => i.Rover.Name == roverName);            
+            var imgs = (_cache.Get<IEnumerable<RoverImage>>(_cacheKey) ?? new List<RoverImage>())
+                .Where(i => dates.Contains(i.EarthDate) && roverNames.Contains(i.Rover.Name));
             return imgs.Skip((page - 1) * perPage).Take(perPage);
         }
 
-        public int SearchImagesCount(DateTime date, string roverName)
+        public int SearchImagesCount(IEnumerable<DateTime> dates, IEnumerable<string> roverNames)
         {
-            var imgs = _cache.Get<IEnumerable<RoverImage>>(_cacheKey);
-            if (DateTime.Compare(date, new DateTime()) != 0)
-                imgs = imgs.Where(i => i.EarthDate == date);
-            if (!string.IsNullOrWhiteSpace(roverName))
-                imgs = imgs.Where(i => i.Rover.Name == roverName);
+            var imgs = (_cache.Get<IEnumerable<RoverImage>>(_cacheKey) ?? new List<RoverImage>())
+                .Where(i => dates.Contains(i.EarthDate) && roverNames.Contains(i.Rover.Name));
             return imgs.Count();
         }
 

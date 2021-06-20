@@ -1,1 +1,9 @@
-<p>home works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand mx-3" href="#">Mars Rover Images</a>      
+    </div>
+</nav>
+<div id="homeWrapper" class="row g-0">
+    <h2 class="text-center" *ngIf="_initializingData">Initializing Data</h2>
+    <app-search class="col-12" *ngIf="!_initializingData"></app-search> 
+</div>

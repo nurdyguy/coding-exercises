@@ -8,8 +8,8 @@ namespace NasaAPI.Repositories.Contracts
     public interface IRoverImageRepository
     {
         RoverImage GetImage(int id);
-        IEnumerable<RoverImage> SearchImages(DateTime date, string roverName, int page, int perPage);
-        int SearchImagesCount(DateTime date, string roverName);
+        IEnumerable<RoverImage> SearchImages(IEnumerable<DateTime> dates, IEnumerable<string> roverNames, int page, int perPage);
+        int SearchImagesCount(IEnumerable<DateTime> dates, IEnumerable<string> roverNames);
         Task<bool> SaveImages(IEnumerable<RoverImage> images);
     }
 }

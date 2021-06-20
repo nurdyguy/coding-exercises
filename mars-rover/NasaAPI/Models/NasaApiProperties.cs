@@ -9,6 +9,5 @@ namespace NasaAPI.Models
         public string ApiKey { get; set; }
         public string BaseUrl { get; set; }
         public IEnumerable<string> Rovers { get; set; }
-        //public IEnumerable<RoverCamera> Cameras { get; set; }
     }
 }
