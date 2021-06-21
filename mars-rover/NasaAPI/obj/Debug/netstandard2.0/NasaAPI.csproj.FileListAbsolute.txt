@@ -1,0 +1,9 @@
+C:\Users\Your Face\Documents\git\coding-exercises\mars-rover\NasaAPI\bin\Debug\netstandard2.0\NasaAPI.deps.json
+C:\Users\Your Face\Documents\git\coding-exercises\mars-rover\NasaAPI\bin\Debug\netstandard2.0\NasaAPI.dll
+C:\Users\Your Face\Documents\git\coding-exercises\mars-rover\NasaAPI\bin\Debug\netstandard2.0\NasaAPI.pdb
+C:\Users\Your Face\Documents\git\coding-exercises\mars-rover\NasaAPI\obj\Debug\netstandard2.0\NasaAPI.csprojAssemblyReference.cache
+C:\Users\Your Face\Documents\git\coding-exercises\mars-rover\NasaAPI\obj\Debug\netstandard2.0\NasaAPI.AssemblyInfoInputs.cache
+C:\Users\Your Face\Documents\git\coding-exercises\mars-rover\NasaAPI\obj\Debug\netstandard2.0\NasaAPI.AssemblyInfo.cs
+C:\Users\Your Face\Documents\git\coding-exercises\mars-rover\NasaAPI\obj\Debug\netstandard2.0\NasaAPI.csproj.CoreCompileInputs.cache
+C:\Users\Your Face\Documents\git\coding-exercises\mars-rover\NasaAPI\obj\Debug\netstandard2.0\NasaAPI.dll
+C:\Users\Your Face\Documents\git\coding-exercises\mars-rover\NasaAPI\obj\Debug\netstandard2.0\NasaAPI.pdb

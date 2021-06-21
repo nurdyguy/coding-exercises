@@ -1,0 +1,95 @@
+<div id="searchWrapper" class="px-5">
+    <div class="row g=0">
+        <div class="col-12 text-center">
+            <h3>Search Filters</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-6 col-md-3 col-lg-2">
+            <h4>Image Dates</h4>
+            <div class="form-check" *ngFor="let date of _searchFilter?.Dates">
+                <input class="form-check-input" type="checkbox" value="{{ date.Value }}"
+                    [(ngModel)]="date.IsChecked" >
+                <label class="form-check-label" for="flexCheckChecked">
+                    {{ date.Value | date:'M/d/yyyy' }}
+                </label>
+            </div>            
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+            <h4>Rovers</h4>
+            <div class="form-check" *ngFor="let rover of _searchFilter?.Rovers">
+                <input class="form-check-input" type="checkbox" value="{{ rover.Value }}"
+                    [(ngModel)]="rover.IsChecked" >
+                <label class="form-check-label" for="flexCheckChecked">
+                    {{ rover.Value }}
+                </label>
+            </div>            
+        </div>
+        <div class="col-6 col-md-3 align-self-end">
+            <button type="button" class="btn btn-primary" (click)="NewSearch()">Search</button>
+        </div>
+        <div class="col-6 col-md-3 col-lg-4 align-self-end">
+            <div class="row g-0">
+                <div class="col-12">
+                    {{ _total > 0 ?'Showing ' + (_perPage * (_page - 1) + 1) + ' to ' + (_perPage * _page) + ' of ' + _total : 'No Results'}}
+                </div>
+            </div>
+            <div class="row g-0">
+                <div class="col-12">
+                    <nav>
+                        <ul class="pagination mb-0">                            
+                            <li class="page-item {{ _page == 1 ? 'disabled' : '' }}">
+                                <a class="page-link" (click)="ToPage(_page-1)">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item {{ i == _page ? 'active' : '' }}" *ngFor="let i of _pageNumbers">
+                                <a class="page-link" (click)="ToPage(i)">{{ i }}</a>
+                            </li>
+                            <li class="page-item {{ _page == _totalPages ? 'disabled' : '' }}">
+                                <a class="page-link" (click)="ToPage(_page+1)">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-0 my-3">
+        <hr class="w-100">
+    </div>
+    <div class="row g-0">
+        <div class="col-2">
+            <h4>Preview</h4>
+        </div>
+        <div class="col-2">
+            <h4>Rover</h4>
+        </div>
+        <div class="col-4">
+            <h4>Camera</h4>
+        </div>
+        <div class="col-2">
+            <h4>Image Date</h4>
+        </div>
+    </div>
+    <div id="results">
+        <div class="row g-0 align-items-center" *ngFor="let image of _roverImages; let i = index"
+            (click)="ShowDetail(image.Id)">
+            <div class="col-2">
+                <img src="{{ image.Image }}">
+            </div>
+            <div class="col-2 align-middle">
+                {{ image.Rover.Name }}
+            </div>
+            <div class="col-4 align-middle">
+                {{ image.Camera.Abbreviation + ' (' + image.Camera.Name + ')' }}
+            </div>
+            <div class="col-2">
+                <span class="d-inline align-middle">{{ image.Date | date:'M/d/yyyy' }}</span>
+            </div>
+        </div>
+    </div>
+</div>

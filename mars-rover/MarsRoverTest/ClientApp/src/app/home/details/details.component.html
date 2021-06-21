@@ -1,0 +1,23 @@
+<div id="detailsModal">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">
+            {{ _imageDetail?.Rover?.Name }} Image {{ _imageDetail?.Id }}
+        </h4>
+        <button type="button" class="close btn-primary" aria-label="Close button" aria-describedby="modal-title"
+            (click)="_modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Earth Date: {{ _imageDetail?.EarthDate | date:'shortDate' }}</p>
+        <p>Camera: {{ _imageDetail?.Camera?.Name }}</p>
+        <div class="row g-0">
+            <div class="col-12 text-center">
+                <img src="{{ _imageDetail?.Image }}">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ngbAutofocus class="btn btn-primary" (click)="_modal.close('Ok click')">Close</button>
+    </div>
+</div>

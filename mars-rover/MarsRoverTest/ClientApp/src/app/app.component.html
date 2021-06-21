@@ -1,0 +1,8 @@
+<div id="app-wrapper" class="wrapper container-fluid g-0">
+    <router-outlet></router-outlet>
+    <div id="loading" *ngIf="_showLoading">
+        <div class="spinner-border" role="status">
+            <span class="sr-only"></span>
+          </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+#searchWrapper{
+    #results{
+        .row{
+            height:50px;
+
+            img{
+                text-align: center;
+                width: 45px;
+                height:45px;
+            }
+
+            &:hover{
+                cursor: pointer;
+                background-color: darkslategray;
+            }
+        }
+        
+    }
+}

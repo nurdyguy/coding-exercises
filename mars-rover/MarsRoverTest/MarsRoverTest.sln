@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRoverTest", "MarsRoverTest.csproj", "{011417C6-5017-43B4-A4EA-CFDFCBAF9B52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaAPI", "..\NasaAPI\NasaAPI.csproj", "{14AFB2A9-3EBB-4E21-92AC-26497ADD70DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{011417C6-5017-43B4-A4EA-CFDFCBAF9B52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{011417C6-5017-43B4-A4EA-CFDFCBAF9B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{011417C6-5017-43B4-A4EA-CFDFCBAF9B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{011417C6-5017-43B4-A4EA-CFDFCBAF9B52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14AFB2A9-3EBB-4E21-92AC-26497ADD70DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14AFB2A9-3EBB-4E21-92AC-26497ADD70DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14AFB2A9-3EBB-4E21-92AC-26497ADD70DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14AFB2A9-3EBB-4E21-92AC-26497ADD70DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13CAD666-E24A-4D74-BFDB-7CB7D8FD8C92}
+	EndGlobalSection
+EndGlobal
